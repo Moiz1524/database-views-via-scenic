@@ -28,10 +28,20 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_05_123011) do
 
 
   create_view "views_all_users_contents", sql_definition: <<-SQL
-      SELECT comments.body
+      SELECT concat('Comment', '-', comments.id) AS id,
+      comments.body,
+      'Comment'::text AS contentable_type,
+      comments.id AS contentable_id,
+      comments.created_at,
+      comments.updated_at
      FROM comments
   UNION
-   SELECT posts.body
+   SELECT concat('Post', '-', posts.id) AS id,
+      posts.body,
+      'Post'::text AS contentable_type,
+      posts.id AS contentable_id,
+      posts.created_at,
+      posts.updated_at
      FROM posts;
   SQL
 end
