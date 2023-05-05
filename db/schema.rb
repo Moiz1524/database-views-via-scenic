@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_05_122612) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_05_123011) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -26,4 +26,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_05_122612) do
     t.datetime "updated_at", null: false
   end
 
+
+  create_view "views_all_users_contents", sql_definition: <<-SQL
+      SELECT comments.body
+     FROM comments
+  UNION
+   SELECT posts.body
+     FROM posts;
+  SQL
 end
